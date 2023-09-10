@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atv - Caixa Eletrônico</title>
+    <script>
+
+        var valido = true;
+        var senhaCorreta = "3589";
+        var nome = prompt("Qual o seu nome ?");
+        var saldo = 1000.0;
+
+        alert("Olá, " + nome + " é um prazer ter você aqui!");
+
+        function inicio() {
+
+            var escolha = parseInt(prompt("Digite a opção desejada: \n1) Saldo \n2) Extrato \n3) Saque \n4) Depósito \n5) Transferência \n6) Sair"));
+
+            switch (escolha) {
+                case 1:
+                    verSaldo();
+                    break;
+                case 2:
+                    verExtrato();
+                    break;
+                case 3:
+                    fazerSaque();
+                    break;
+                case 4:
+                    fazerDeposito();
+                    break;
+                case 5:
+                    fazerTransferencia();
+                    break;
+                case 6:
+                    sair();
+                    break;
+                default:
+                    erro();
+            }
+        }
+
+        function verSaldo() {
+            senha();
+            alert("O seu saldo é de: " + saldo);
+            inicio();
+        }
+
+        function verExtrato() {
+            senha();
+            alert("segue abaixo o extrato: \n14/08 --- Super Mercado --- R$ 418,00\n20/08 --- Loja de Video Game --- R$ 1000,00\n05/08 --- Feira --- R$ 100,00 ");
+            inicio();
+        }
+
+        function fazerSaque() {
+            senha();
+            var saque = parseFloat(prompt("Qual o valor para saque?"));
+            if (isNaN(saque) || saque === '' || saque > saldo || saque <= 0) {
+                alert("Operação não autorizada")
+            }
+            else {
+                saldo -= saque;
+            }
+        }
+
+        function fazerDeposito() {
+            var deposito = parseFloat(prompt("Qual o valor para deposito?"));
+            if (isNaN(deposito) || deposito <= 0) {
+                alert("Operação não autorizada")
+            }
+            else {
+                saldo += deposito;
+                verSaldo();
+            }
+        }
+
+        function fazerTransferencia() {
+            var numeroConta = prompt("Informe o numero da conta de destino: ");
+            var valorTransferencia = parseFloat(prompt("Informe o valor de transferência:"));
+            if (isNaN(numeroConta) || valorTransferencia <= 0) {
+                alert("Operação não realizada!");
+                return;
+            }
+            if (valorTransferencia > saldo) {
+                alert("Operação não autorizada. Saldo insuficiente.");
+                fazerTransferencia();
+            }
+            saldo -= valorTransferencia;
+            alert("Transferência de R$" + valorTransferencia.toFixed(2) + " para a conta " + numeroConta + " realizada com sucesso.");
+
+            alert("Saldo atual: R$" + saldo.toFixed(2));
+
+            inicio();
+        }
+
+        function sair() {
+            var confirma = confirm('Você deseja sair?');
+            if (confirma) {
+                alert("Nós agradecemos por utilizar os nossos serviços " + nome + ", foi um prazer ter você por aqui!");
+                window.close();
+            } else {
+                inicio();
+            }
+        }
+
+        function erro() {
+            alert('Por favor, informe um número entre 1 e 4.');
+            inicio();
+        }
+
+        function senha() {
+            var senha = prompt("Digite sua senha: ");
+            if (senha === senhaCorreta) {
+                valido = true;
+            } else {
+                alert("Senha incorreta!")
+                inicio();
+            }
+        }
+
+        inicio();
+        
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
